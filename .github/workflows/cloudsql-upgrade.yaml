@@ -24,7 +24,7 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
-        credentials_json: $SERVICE_ACCOUNT
+        credentials_json: '$SERVICE_ACCOUNT'
 
     - name: Run Cloud SQL Maintenance 
       run: scripts/maintenance-upgrade.sh
