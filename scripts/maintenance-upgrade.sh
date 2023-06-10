@@ -3,8 +3,6 @@
 PRESENT_DATESTR=`/bin/date --date="" '+%Y-%m-%d'`
 export PRESENT_DATESTR
 
-#WEBHOOK_URL="https://hooks.slack.com/services/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"
-#export WEBHOOK_URL
 
 MAINTENANCE_0_FLAG="/home/lostinopensrc/maintenance_0_flag.txt"
 export MAINTENANCE_0_FLAG
