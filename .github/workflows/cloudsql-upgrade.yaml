@@ -27,5 +27,5 @@ jobs:
 
     - name: Run Cloud SQL Maintenance 
       run: |
-      /bin/sh /home/lostinopensrc/cloudsql-maintenance-upgrade/_work/cloudsql-maintenance-upgrade/cloudsql-maintenance-upgrade/scripts/maintenance-upgrade.sh
+       /bin/sh /home/lostinopensrc/cloudsql-maintenance-upgrade/_work/cloudsql-maintenance-upgrade/cloudsql-maintenance-upgrade/scripts/maintenance-upgrade.sh
 
