@@ -1,0 +1,31 @@
+name: Cloud SQL Maintenance
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - 'main'
+
+env:
+  WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+  BOT_TOKEN: ${{ secrets.BOT_AUTH_TOKEN }}
+      
+jobs:
+  cloudsql-maintenance:
+    runs-on: cloudsql-maintenance-runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1.1.1'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+    - name: Run Cloud SQL Maintenance 
+      run: |
+       /bin/sh /home/lostinopensrc/cloudsql-maintenance-upgrade/_work/cloudsql-maintenance-upgrade/cloudsql-maintenance-upgrade/scripts/maintenance-upgrade.sh
+

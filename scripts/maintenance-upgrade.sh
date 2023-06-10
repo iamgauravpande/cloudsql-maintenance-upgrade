@@ -3,8 +3,8 @@
 PRESENT_DATESTR=`/bin/date --date="" '+%Y-%m-%d'`
 export PRESENT_DATESTR
 
-WEBHOOK_URL="https://hooks.slack.com/services/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"
-export WEBHOOK_URL
+#WEBHOOK_URL="https://hooks.slack.com/services/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"
+#export WEBHOOK_URL
 
 MAINTENANCE_0_FLAG="/home/lostinopensrc/maintenance_0_flag.txt"
 export MAINTENANCE_0_FLAG
@@ -32,9 +32,9 @@ then
          sleep 5s
          gcloud sql instances describe homelab-pg01 |  grep  denyMaintenancePeriods -A2 | grep -E "endDate|startDate" | awk '{$1=$1};1' > /home/lostinopensrc/deny_maintenance_window_0.txt
          sleep 3s
-         curl -F file="@/home/lostinopensrc/deny_maintenance_window_0.txt" -F "initial_comment=Placed 90 days Deny Maintenance Window for Instance: homelab-pg01 now patching to latest Maintenance Version" -F channels="homelab" -H "Authorization:Bearer xoxb-5219707682822-5404950893747-a2WK4AyGvM4jpEkhmVTotzUV" https://slack.com/api/files.upload
+         curl -F file="@/home/lostinopensrc/deny_maintenance_window_0.txt" -F "initial_comment=Placed 90 days Deny Maintenance Window for Instance: homelab-pg01 now patching to latest Maintenance Version" -F channels="homelab" -H "Authorization:Bearer $BOT_TOKEN" https://slack.com/api/files.upload
          gcloud sql instances patch homelab-pg01 --maintenance-version="${availableMaintenanceVersions}"
-         sleep 8m
+         sleep 6m
          postPatchAvailableMaintenanceVersions=`gcloud sql instances describe homelab-pg01  --flatten=availableMaintenanceVersions | grep  -w "availableMaintenanceVersions" | cut -d ":" -f 2 | cut -d " " -f 2`
          if [ -z "$postPatchAvailableMaintenanceVersions" ];then
            if [ -f $MAINTENANCE_0_FLAG ];then
@@ -46,4 +46,3 @@ then
       fi
   fi
 fi
-
