@@ -26,5 +26,6 @@ jobs:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
     - name: Run Cloud SQL Maintenance 
-      run: scripts/maintenance-upgrade.sh
-      shell: bash
+      run: |
+      /bin/sh /home/lostinopensrc/cloudsql-maintenance-upgrade/_work/cloudsql-maintenance-upgrade/cloudsql-maintenance-upgrade/scripts/maintenance-upgrade.sh
+
