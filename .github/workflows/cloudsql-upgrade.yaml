@@ -2,11 +2,15 @@ name: Cloud SQL Maintenance
 
 on:
   workflow_dispatch:
+  
+  schedule:
+    - cron:  '45 6 * * *'
 
   pull_request:
     branches:
       - 'main'
-      
+    paths: 'scripts/maintenance-upgrade.sh'
+
 env:
   WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
   BOT_TOKEN: ${{ secrets.BOT_AUTH_TOKEN }}
@@ -28,4 +32,3 @@ jobs:
     - name: Run Cloud SQL Maintenance 
       run: |
        /bin/sh /home/lostinopensrc/cloudsql-maintenance-upgrade/_work/cloudsql-maintenance-upgrade/cloudsql-maintenance-upgrade/scripts/maintenance-upgrade.sh
-
