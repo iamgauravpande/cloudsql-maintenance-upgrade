@@ -2,9 +2,10 @@ name: Cloud SQL Maintenance
 
 on:
   workflow_dispatch:
-  
-  schedule:
-    - cron:  '45 6 * * *'
+
+## Uncomment schedule when need to enable.
+  # schedule:
+  #   - cron:  '15 12 * * *'
 
   pull_request:
     branches:
@@ -25,10 +26,11 @@ jobs:
     
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v1.1.1'
+      uses: 'google-github-actions/auth@v2'
       with:
-        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+        workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
+        service_account: ${{ vars.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
 
     - name: Run Cloud SQL Maintenance 
-      run: |
+      run:
        /bin/sh /home/lostinopensrc/cloudsql-maintenance-upgrade/_work/cloudsql-maintenance-upgrade/cloudsql-maintenance-upgrade/scripts/maintenance-upgrade.sh
